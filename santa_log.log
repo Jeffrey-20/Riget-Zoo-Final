@@ -5367,3 +5367,7 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'plant_trivia' not found. 'pl
 2025-10-21 16:10:56,833-WARNING -Not Found: /.well-known/appspecific/com.chrome.devtools.json
 2025-10-21 16:11:02,657-WARNING -Not Found: /.well-known/appspecific/com.chrome.devtools.json
 2025-10-21 16:20:42,312-INFO -Home page loaded
+2025-10-21 16:21:03,783-INFO -Home page loaded
+2025-10-21 16:21:05,285-WARNING -Not Found: /media/products/lion.jpg
+2025-10-21 16:24:04,999-INFO -Home page loaded
+2025-10-21 16:30:26,541-INFO -Home page loaded
