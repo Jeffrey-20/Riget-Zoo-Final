@@ -1,136 +1,316 @@
 {% extends "pages/base.html" %}
+
 {% load static %}
+
 {% block content %}
-  <style>
-        /* CSS for the background image and transparency */
-        #welcome-section {
-            /* 1. Set the background image */
-            background-image: url("{% static 'images/zoo_background.jpg' %}");
-            background-size: cover; /* Ensure image covers the area */
-            background-position: center;
-            background-repeat: no-repeat;
-            
-            /* 2. Add padding/min-height to make the background visible */
-            padding-top: 50px;
-            padding-bottom: 50px;
-            
-            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
-            /* This is a shorthand property combining image and overlay color */
-            background-image: 
-                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url("{% static 'images/zoo_background.jpg' %}");
-            
-            /* Ensure the text is readable */
-            color: white; 
-            
-            /* 4. Add the transition for a smooth visual effect */
-            transition: all 0.5s ease-in-out; 
-            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
-        }
-        
-        /* Optional: Hover effect to demonstrate the transition */
-        #welcome-section:hover {
-            opacity: 1; 
-        }
-
-        /* Ensure the heading text is aligned */
-        #welcome-section h1, #welcome-section h3 {
-            color: white; /* Ensure text color is white */
-            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
-        }
-    </style>
-
     <br>
     
     <div class="text-center" id="welcome-section">
         
         <br>
-        
+       
         <hr>
         <br>
         
     </div>
     
     <br>
-    
+  <!--    --> <script src="{% static 'js/trivia.js'%}"></script>
 
-<div class="container my-5">
-  <h1 class="text-center mb-5 fw-bold text-success">Explore the Zoo Trivia</h1>
-
-  <!-- 🐾 Responsive grid: 1 column on small screens, 3 on medium+, 4 on large+ -->
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-    <!-- 🦎 Reptile Trivia -->
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 rounded-4">
-        <div class="card-body text-center">
-          <h4 class="card-title fw-bold">🦎 Reptile Trivia</h4>
-          <p class="card-text text-muted">Test your knowledge of snakes, lizards, and turtles!</p>
-          <a href="{% url 'reptile_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
-
-        </div>
-      </div>
+    <div id="app" class="container mx-auto p-4 md:p-8">
+        <!-- Content will be injected here by JavaScript -->
     </div>
 
-
-    <!-- 🐘 Mammal Trivia -->
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 rounded-4">
-        <div class="card-body text-center">
-          <h4 class="card-title fw-bold">🐘 Mammal Trivia</h4>
-          <p class="card-text text-muted">From lions to lemurs — see how much you know about mammals!</p>
-          <a href="{% url 'mammal_trivia' %}" class="btn btn-outline-success ">Play Trivia</a>
+    <!-- Modal for score/feedback -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl shadow-2xl p-6 md:p-10 max-w-lg w-full text-center transform transition-all scale-95 duration-300">
+            <h2 id="modal-title" class="text-3xl font-bold text-gray-900 mb-4"></h2>
+            <p id="modal-body" class="text-gray-600 mb-6 text-lg"></p>
+            <button onclick="window.location.reload();" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-150">
+                Go Back to Categories
+            </button>
         </div>
-      </div>
     </div>
 
-    <!-- 🦜 Birds Trivia -->
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 rounded-4">
-        <div class="card-body text-center">
-          <h4 class="card-title fw-bold">🦜 Birds Trivia</h4>
-          <p class="card-text text-muted">Discover the secrets of our feathered friends!</p>
-          <a href="{% url 'bird_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
-        </div>
-      </div>
-    </div>
+    <script>
+        // --- TRIVIA DATA ---
+        const ALL_QUESTIONS = {
+            "Reptiles": [
+                {"id": 101, "question_text": "What do snakes use to smell?", "emoji": "🐍", "option_a": "Nose", "option_b": "Eyes", "option_c": "Tongue", "correct_key": "C"},
+                {"id": 102, "question_text": "Which reptile can regrow its tail?", "emoji": "🦎", "option_a": "Crocodile", "option_b": "Lizard", "option_c": "Turtle", "correct_key": "B"},
+                {"id": 103, "question_text": "Which large snake is native to the Amazon rainforest?", "emoji": "🐍", "option_a": "Anaconda", "option_b": "Cobra", "option_c": "Python", "correct_key": "A"},
+                {"id": 104, "question_text": "What is a baby crocodile called?", "emoji": "🐊", "option_a": "Pup", "option_b": "Hatchling", "option_c": "Kit", "correct_key": "B"},
+                {"id": 105, "question_text": "What substance makes up a reptile's scales?", "emoji": "🐢", "option_a": "Chitin", "option_b": "Keratin", "option_c": "Calcium", "correct_key": "B"},
+                {"id": 106, "question_text": "Which famous gecko species is known for changing color?", "emoji": "🦎", "option_a": "Iguana", "option_b": "Skink", "option_c": "Chameleon", "correct_key": "C"},
+                {"id": 107, "question_text": "How many chambers does a typical reptile heart have?", "emoji": "💚", "option_a": "Two", "option_b": "Three", "option_c": "Four", "correct_key": "B"},
+                {"id": 108, "question_text": "What term describes a snake shedding its skin?", "emoji": " shedding", "option_a": "Molting", "option_b": "Ecdysis", "option_c": "Moulting", "correct_key": "B"},
+                {"id": 109, "question_text": "What is the largest living species of sea turtle?", "emoji": "🌊", "option_a": "Loggerhead", "option_b": "Green Turtle", "option_c": "Leatherback", "correct_key": "C"},
+                {"id": 110, "question_text": "Which reptile is often referred to as a 'living fossil'?", "emoji": "🦴", "option_a": "Tuatara", "option_b": "Komodo Dragon", "option_c": "Galapagos Tortoise", "correct_key": "A"},
+            ],
+            "Mammals": [
+                {"id": 201, "question_text": "Which mammal lays eggs?", "emoji": "🥚", "option_a": "Platypus", "option_b": "Bat", "option_c": "Kangaroo", "correct_key": "A"},
+                {"id": 202, "question_text": "What is the world's largest mammal?", "emoji": "🐋", "option_a": "African Elephant", "option_b": "Giraffe", "option_c": "Blue Whale", "correct_key": "C"},
+                {"id": 203, "question_text": "What unique feature do all mammals possess?", "emoji": "🥛", "option_a": "Feathers", "option_b": "Scales", "option_c": "Mammary Glands", "correct_key": "C"},
+                {"id": 204, "question_text": "Which nocturnal mammal is known for hanging upside down?", "emoji": "🦇", "option_a": "Sloth", "option_b": "Bat", "option_c": "Koala", "correct_key": "B"},
+                {"id": 205, "question_text": "How many stomachs does a cow have?", "emoji": "🐄", "option_a": "Two", "option_b": "One", "option_c": "Four", "correct_key": "C"},
+                {"id": 206, "question_text": "Which African animal is the tallest mammal on Earth?", "emoji": "🦒", "option_a": "Elephant", "option_b": "Rhino", "option_c": "Giraffe", "correct_key": "C"},
+                {"id": 207, "question_text": "What is a group of lions called?", "emoji": "🦁", "option_a": "Pride", "option_b": "Pack", "option_c": "Herd", "correct_key": "A"},
+                {"id": 208, "question_text": "Which mammal can retract its claws?", "emoji": "🐈", "option_a": "Dog", "option_b": "Cat", "option_c": "Bear", "correct_key": "B"},
+                {"id": 209, "question_text": "What is the only marsupial native to North America?", "emoji": "🦡", "option_a": "Raccoon", "option_b": "Opossum", "option_c": "Armadillo", "correct_key": "B"},
+                {"id": 210, "question_text": "What is the fastest land animal?", "emoji": "🐆", "option_a": "Lion", "option_b": "Gazelle", "option_c": "Cheetah", "correct_key": "C"},
+            ],
+            "Birds": [
+                {"id": 301, "question_text": "Which bird can fly backward?", "emoji": "🐦", "option_a": "Hawk", "option_b": "Hummingbird", "option_c": "Eagle", "correct_key": "B"},
+                {"id": 302, "question_text": "What is the largest living bird?", "emoji": "🥚", "option_a": "Emu", "option_b": "Condor", "option_c": "Ostrich", "correct_key": "C"},
+                {"id": 303, "question_text": "What is the function of a bird's gizzard?", "emoji": "🍴", "option_a": "Pumping blood", "option_b": "Grinding food", "option_c": "Producing oil", "correct_key": "B"},
+                {"id": 304, "question_text": "Which type of feather is used primarily for insulation?", "emoji": "☁️", "option_a": "Flight", "option_b": "Contour", "option_c": "Down", "correct_key": "C"},
+                {"id": 305, "question_text": "What is the collective noun for a group of crows?", "emoji": "⚫", "option_a": "Flock", "option_b": "Cackle", "option_c": "Murder", "correct_key": "C"},
+                {"id": 306, "question_text": "Which bird is native to Antarctica and cannot fly?", "emoji": "🐧", "option_a": "Puffin", "option_b": "Penguin", "option_c": "Albatross", "correct_key": "B"},
+                {"id": 307, "question_text": "What is the primary component of a bird's beak?", "emoji": "🦴", "option_a": "Bone", "option_b": "Keratin", "option_c": "Cartilage", "correct_key": "B"},
+                {"id": 308, "question_text": "Which bird is considered the smartest?", "emoji": "🧠", "option_a": "Pigeon", "option_b": "Raven", "option_c": "Sparrow", "correct_key": "B"},
+                {"id": 309, "question_text": "How many toes does a typical perching bird have?", "emoji": "🦶", "option_a": "Two", "option_b": "Three", "option_c": "Four", "correct_key": "C"},
+                {"id": 310, "question_text": "Which bird of prey is known for its spectacular diving speed?", "emoji": "🚀", "option_a": "Golden Eagle", "option_b": "Kestrel", "option_c": "Peregrine Falcon", "correct_key": "C"},
+            ],
+            "Fishes": [
+                {"id": 401, "question_text": "What organ do most fish use to breathe?", "emoji": "🐟", "option_a": "Lungs", "option_b": "Spleen", "option_c": "Gills", "correct_key": "C"},
+                {"id": 402, "question_text": "What is the world's largest fish?", "emoji": "🐋", "option_a": "Great White Shark", "option_b": "Manta Ray", "option_c": "Whale Shark", "correct_key": "C"},
+                {"id": 403, "question_text": "What is a group of fish called?", "emoji": "🌊", "option_a": "Herd", "option_b": "Swarm", "option_c": "School", "correct_key": "C"},
+                {"id": 404, "question_text": "What bony structure protects a fish's gills?", "emoji": "🛡️", "option_a": "Gill Raker", "option_b": "Operculum", "option_c": "Mandible", "correct_key": "B"},
+                {"id": 405, "question_text": "Which fish can generate a powerful electrical discharge?", "emoji": "⚡", "option_a": "Catfish", "option_b": "Mackerel", "option_c": "Electric Eel", "correct_key": "C"},
+                {"id": 406, "question_text": "Which species of fish migrates to spawn in freshwater?", "emoji": "🏞️", "option_a": "Tuna", "option_b": "Salmon", "option_c": "Cod", "correct_key": "B"},
+                {"id": 407, "question_text": "What is the function of a fish's lateral line system?", "emoji": "👂", "option_a": "Producing light", "option_b": "Detecting vibrations", "option_c": "Changing color", "correct_key": "B"},
+                {"id": 408, "question_text": "What is a baby fish called?", "emoji": "👶", "option_a": "Tadpole", "option_b": "Fry", "option_c": "Calf", "correct_key": "B"},
+                {"id": 409, "question_text": "Which fish can walk on land for short distances?", "emoji": "🚶", "option_a": "Trout", "option_b": "Halibut", "option_c": "Mudskipper", "correct_key": "C"},
+                {"id": 410, "question_text": "What type of skeleton do sharks and rays have?", "emoji": "🦴", "option_a": "Bony", "option_b": "Exoskeleton", "option_c": "Cartilage", "correct_key": "C"},
+            ],
+            "Dinosaurs": [
+                {"id": 501, "question_text": "The name 'Tyrannosaurus Rex' means what?", "emoji": "👑", "option_a": "King of the Dinosaurs", "option_b": "Tyrant Lizard King", "option_c": "Great Clawed Hunter", "correct_key": "B"},
+                {"id": 502, "question_text": "Which dinosaur is famous for having three horns?", "emoji": " horns", "option_a": "Stegosaurus", "option_b": "Velociraptor", "option_c": "Triceratops", "correct_key": "C"},
+                {"id": 503, "question_text": "The extinction of the dinosaurs occurred how many years ago?", "emoji": "☄️", "option_a": "6.6 million", "option_b": "66 million", "option_c": "166 million", "correct_key": "B"},
+                {"id": 504, "question_text": "What were dinosaurs generally believed to have evolved from?", "emoji": "🦕", "option_a": "Birds", "option_b": "Reptiles", "option_c": "Mammals", "correct_key": "B"},
+                {"id": 505, "question_text": "Which flying reptile lived alongside dinosaurs but was not a dinosaur?", "emoji": "🦅", "option_a": "Icthyosaur", "option_b": "Pterosaur", "option_c": "Mosasaurs", "correct_key": "B"},
+                {"id": 506, "question_text": "What is the largest known herbivorous dinosaur?", "emoji": "🌳", "option_a": "Brachiosaurus", "option_b": "Triceratops", "option_c": "Argentinosaurus", "correct_key": "C"},
+                {"id": 507, "question_text": "What is a group of long-necked, plant-eating dinosaurs called?", "emoji": "🦒", "option_a": "Theropods", "option_b": "Ornithopods", "option_c": "Sauropods", "correct_key": "C"},
+                {"id": 508, "question_text": "Which theory suggests a massive impact caused the dinosaur extinction?", "emoji": "💥", "option_a": "Volcanic Eruption Theory", "option_b": "Asteroid Impact Theory", "option_c": "Disease Theory", "correct_key": "B"},
+                {"id": 509, "question_text": "Which dinosaur had large bony plates running down its back?", "emoji": "🛡️", "option_a": "Ankylosaurus", "option_b": "Apatosaurus", "option_c": "Stegosaurus", "correct_key": "C"},
+                {"id": 510, "question_text": "What continent was home to the most dinosaur species discovered?", "emoji": "🌎", "option_a": "Asia", "option_b": "South America", "option_c": "North America", "correct_key": "C"},
+            ],
+            "Plants": [
+                {"id": 601, "question_text": "What process do plants use to convert light into energy?", "emoji": "☀️", "option_a": "Respiration", "option_b": "Photosynthesis", "option_c": "Transpiration", "correct_key": "B"},
+                {"id": 602, "question_text": "What part of the plant absorbs water and nutrients from the soil?", "emoji": "💧", "option_a": "Stem", "option_b": "Roots", "option_c": "Leaves", "correct_key": "B"},
+                {"id": 603, "question_text": "What gas do plants primarily absorb from the atmosphere?", "emoji": "💨", "option_a": "Oxygen", "option_b": "Carbon Dioxide", "option_c": "Carbon Monoxide", "correct_key": "B"},
+                {"id": 604, "question_text": "What is the waxy outer layer of a leaf called?", "emoji": "🌿", "option_a": "Epidermis", "option_b": "Stomata", "option_c": "Cuticle", "correct_key": "C"},
+                {"id": 605, "question_text": "Which flower is known for following the sun's movement?", "emoji": "🌻", "option_a": "Rose", "option_b": "Sunflower", "option_c": "Tulip", "correct_key": "B"},
+                {"id": 606, "question_text": "What are plants that bloom for only one season called?", "emoji": "📅", "option_a": "Perennials", "option_b": "Biennials", "option_c": "Annuals", "correct_key": "C"},
+                {"id": 607, "question_text": "What substance gives plants their green color?", "emoji": "🟢", "option_a": "Carotene", "option_b": "Chlorophyll", "option_c": "Anthocyanin", "correct_key": "B"},
+                {"id": 608, "question_text": "The transfer of pollen from the stamen to the pistil is known as what?", "emoji": "🐝", "option_a": "Fertilization", "option_b": "Germination", "option_c": "Pollination", "correct_key": "C"},
+                {"id": 609, "question_text": "Which type of plant produces cones instead of flowers or fruits?", "emoji": "🌲", "option_a": "Ferns", "option_b": "Mosses", "option_c": "Conifers", "correct_key": "C"},
+                {"id": 610, "question_text": "What is the primary function of a plant's stem?", "emoji": "🪜", "option_a": "Anchor to soil", "option_b": "Support and transport", "option_c": "Producing seeds", "correct_key": "B"},
+            ]
+        };
 
-    <br>
-    <br>
-    <!-- 🐠 Fish Trivia -->
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 rounded-4">
-        <div class="card-body text-center">
-          <h4 class="card-title fw-bold">🐠 Fish Trivia</h4>
-          <p class="card-text text-muted">Dive into the depths of aquatic knowledge!</p>
-          <a href="{% url 'fish_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
-        </div>
-      </div>
-    </div>
+        const EMOJI_MAP = {
+            "Reptiles": "🐍", "Mammals": "🐘", "Birds": "🐦", "Fishes": "🐠", "Dinosaurs": "🦖", "Plants": "🌿"
+        };
+        const app = document.getElementById('app');
+        const modal = document.getElementById('modal');
+        let quizQuestions = [];
 
-    <!-- 🦖 Dino Trivia -->
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 rounded-4">
-        <div class="card-body text-center">
-          <h4 class="card-title fw-bold">🦖 Dino Trivia</h4>
-          <p class="card-text text-muted">Travel back in time and test your dinosaur IQ!</p>
-          <a href="{% url 'dino_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
-        </div>
-      </div>
-    </div>
+        // --- Core Functions ---
 
-    <!-- 🌿 Plant Trivia -->
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0 rounded-4">
-        <div class="card-body text-center">
-          <h4 class="card-title fw-bold">🌿 Plant Trivia</h4>
-          <p class="card-text text-muted">Learn fun facts about nature’s green wonders!</p>
-          <a href="{% url 'plant_trivia' %}" class="btn btn-outline-success">Play Now</a>
-        </div>
-      </div>
-    </div>
+        /**
+         * Renders the category selection screen with cards.
+         */
+        function showCategories() {
+            let categoryHTML = `
+                <header class="text-center mb-10">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-3">Welcome to the Zoo Trivia Challenge!</h1>
+                    <p class="text-xl text-gray-400">Select a module below to test your knowledge on a specific topic.</p>
+                </header>
 
-  </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            `;
+
+            Object.keys(ALL_QUESTIONS).forEach(category => {
+                const description = getCategoryDescription(category);
+                const emoji = EMOJI_MAP[category] || '❓';
+                
+                categoryHTML += `
+                    <div class="rounded-xl card-module p-6 shadow-xl border-t-4 border-emerald-500">
+                        <div class="flex flex-col h-full justify-between">
+                            <div>
+                                <p class="text-5xl mb-4">${emoji}</p>
+                                <h5 class="text-2xl font-bold mb-2">${category} Trivia</h5>
+                                <p class="text-gray-400 text-sm">${description}</p>
+                            </div>
+                            <button onclick="startQuiz('${category}')" class="play-btn mt-5 px-6 py-2 rounded-lg text-lg hover:bg-emerald-500 hover:text-white transition duration-200">
+                                Play Challenge
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            categoryHTML += `</div>`;
+            app.innerHTML = categoryHTML;
+        }
+
+        /**
+         * Selects 5 random questions and starts the quiz rendering.
+         * @param {string} category - The selected category name.
+         */
+        function startQuiz(category) {
+            const questions = ALL_QUESTIONS[category];
+            if (!questions || questions.length === 0) {
+                app.innerHTML = `<div class="text-center text-red-500">No questions found for ${category}.</div>`;
+                return;
+            }
+
+            // Select 5 random questions (or fewer if less than 5 available)
+            quizQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 5);
+
+            renderQuiz(category);
+        }
+
+        /**
+         * Renders the quiz form with the selected questions.
+         * @param {string} category - The selected category name.
+         */
+        function renderQuiz(category) {
+            let quizHTML = `
+                <button onclick="showCategories()" class="mb-6 inline-flex items-center text-emerald-400 hover:text-emerald-300 transition duration-150">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Back to Categories
+                </button>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-center text-emerald-400 mb-2">🎯 ${category} Trivia Challenge</h1>
+                <p class="text-center text-gray-400 mb-8">Answer the 5 questions below and click submit to check your score!</p>
+
+                <form id="quiz-form" class="space-y-6">
+            `;
+
+            quizQuestions.forEach((q, index) => {
+                // Determine the question number text
+                const qNum = index + 1;
+                
+                // Helper to map option keys to full text
+                const options = {
+                    'A': q.option_a,
+                    'B': q.option_b,
+                    'C': q.option_c
+                };
+
+                quizHTML += `
+                    <div class="card question-card p-4 md:p-6 rounded-xl">
+                        <h5 class="text-xl font-bold mb-4 flex items-center">
+                            <span class="text-2xl mr-3">${q.emoji || '💡'}</span>
+                            ${qNum}. ${q.question_text}
+                        </h5>
+                        <div class="space-y-2">
+                            ${['A', 'B', 'C'].map(key => `
+                                <label class="option-label">
+                                    <input type="radio" name="q${q.id}" value="${key}" required> 
+                                    <span>${key}) ${options[key]}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            quizHTML += `
+                    <div class="text-center pt-4">
+                        <button type="submit" class="bg-emerald-500 text-white font-semibold py-3 px-10 rounded-lg text-xl hover:bg-emerald-600 transition duration-200 shadow-xl">
+                            Submit Answers
+                        </button>
+                    </div>
+                </form>
+            `;
+            app.innerHTML = quizHTML;
+            document.getElementById('quiz-form').addEventListener('submit', submitQuiz);
+        }
+
+        /**
+         * Handles form submission and calculates the score.
+         * @param {Event} event - The form submission event.
+         */
+        function submitQuiz(event) {
+            event.preventDefault();
+            
+            let score = 0;
+            const totalQuestions = quizQuestions.length;
+            const formData = new FormData(event.target);
+            const userAnswers = {};
+            
+            // Collect user answers
+            quizQuestions.forEach(q => {
+                userAnswers[q.id] = formData.get(`q${q.id}`);
+            });
+            
+            // Check answers
+            quizQuestions.forEach(q => {
+                if (userAnswers[q.id] === q.correct_key) {
+                    score++;
+                }
+            });
+            
+            displayScore(score, totalQuestions);
+        }
+
+        /**
+         * Displays the score in a modal.
+         * @param {number} score - The number of correct answers.
+         * @param {number} total - The total number of questions.
+         */
+        function displayScore(score, total) {
+            const percentage = (score / total) * 100;
+            let title, body;
+
+            if (percentage === 100) {
+                title = "🎉 Perfect Score! 🎉";
+                body = `You answered all ${total} questions correctly! You're a true ${quizQuestions[0].category_name || 'Zoo'} expert!`;
+            } else if (percentage >= 60) {
+                title = "👍 Great Job!";
+                body = `You scored ${score} out of ${total} (${percentage.toFixed(0)}%). You have excellent knowledge!`;
+            } else {
+                title = "🧐 Keep Learning!";
+                body = `You scored ${score} out of ${total} (${percentage.toFixed(0)}%). Keep studying and try again!`;
+            }
+
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = body;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        /**
+         * Helper function to provide descriptions for categories.
+         * @param {string} category - The category name.
+         * @returns {string} The description.
+         */
+        function getCategoryDescription(category) {
+            switch (category) {
+                case 'Reptiles':
+                    return "Test your knowledge of snakes, lizards, and turtles!";
+                case 'Mammals':
+                    return "From lions to lemurs—see how much you know!";
+                case 'Birds':
+                    return "Discover the secrets of our feathered friends!";
+                case 'Fishes':
+                    return "Dive into the depths of aquatic knowledge!";
+                case 'Dinosaurs':
+                    return "Travel back in time and test your dinosaur IQ!";
+                case 'Plants':
+                    return "Learn fun facts about nature's green wonders!";
+                default:
+                    return "A wild and random mix of knowledge.";
+            }
+        }
+
+        // --- Initialization ---
+        window.onload = showCategories;
+    </script>
+<div class="text-center p-3">
+  <a href="{% url '' %}" class="btn btn-success"> Return To our Zoo</a>    <!-- buttons-->
+    &nbsp; 
 </div>
-
 {% endblock %}

@@ -7,8 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css"> <!--The link where we got the design layout of our website-->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">   <!--The static file  link, it contains images and jkavascript-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">  
+    <link rel="stylesheet" href="{% static 'css/trivia.css' %}">  
     
+    <!--The static file  link, it contains images and jkavascript-->
+       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <!-- Navbar  Starts Here-->
@@ -36,7 +40,7 @@
        <li class="nav-item">
   <a class="nav-link" href="{% url 'shop_home' %}">Shop</a><!--The onnline shopping  link-->
 </li>
-
+<li class="nav-item">
  <a class="nav-link" href="{% url 'trivia' %}">Trivia</a><!--The trivia/ education link  link-->
 </li>
 <!-- This is not typed out, it was gotten from a django bootstrap website. It is a dropdown menu-->
@@ -68,7 +72,7 @@
     {% endblock %}
 </div>
 
-<script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/apps.js' %}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>

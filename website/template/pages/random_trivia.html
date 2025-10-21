@@ -1,0 +1,29 @@
+
+{% extends "pages/base.html" %}
+{% block content %}
+
+<div class="container my-5">
+  <h1 class="text-center text-success">🎯 Random Zoo Trivia</h1>
+  <p class="text-center text-muted">Try these 5 random questions from all categories!</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {% for q in questions %}
+      <div class="card mb-3 shadow-sm border-0 rounded-4">
+        <div class="card-body">
+          <h5 class="fw-bold">{{ forloop.counter }}. {{ q.question_text }}</h5>
+          <div>
+            <label><input type="radio" name="q{{ q.id }}" value="A"> {{ q.option_a }}</label><br>
+            <label><input type="radio" name="q{{ q.id }}" value="B"> {{ q.option_b }}</label><br>
+            <label><input type="radio" name="q{{ q.id }}" value="C"> {{ q.option_c }}</label>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <div class="text-center">
+      <button type="submit" class="btn btn-success px-4">Submit Answers</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends "pages/base.html" %}
+{% load static %}
 {% block content %}
  <style>
         /* CSS for the background image and transparency */
@@ -74,7 +75,7 @@
           <tr>
             <td>
               <div class="d-flex align-items-center">
-                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                <img src="{{ item.products.image.url }}" alt="{{ item.product.name }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
                 <div>
                   <h5 class="mb-1">{{ item.product.name }}</h5>
                   <p class="text-muted small mb-0">Date: {{ item.product.date|default:"Select at checkout" }}</p>
@@ -117,4 +118,5 @@
   </div>
   {% endif %}
 </div>
+
 {% endblock %}

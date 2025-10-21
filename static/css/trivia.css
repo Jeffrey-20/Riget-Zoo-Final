@@ -1,0 +1,107 @@
+     
+       :root {
+            --primary-color: #10b981; /* Emerald 500 */
+            --dark-bg: #1f2937; /* Gray 800 */
+            --card-bg: #374151; /* Gray 700 */
+            --text-light: #f3f4f6; /* Gray 100 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+        .card-module {
+            background-color: var(--card-bg);
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-height: 250px;
+        }
+        .card-module:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+        .play-btn {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .play-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            transform: scale(1.05);
+        }
+        .question-card {
+            background-color: #ffffff; /* White background for contrast */
+            color: #1f2937; /* Dark text */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.15s, border-color 0.15s;
+            border: 1px solid #d1d5db; /* Gray 300 */
+        }
+        .option-label:hover {
+            background-color: #f3f4f6; /* Gray 100 */
+            border-color: #6b7280; /* Gray 500 */
+        }
+        .option-label input[type="radio"]:checked + span {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            accent-color: var(--primary-color);
+        }
+        /* Custom scrollbar for aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563; /* Gray 600 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #374151; /* Gray 700 */
+        }
+
+                /* CSS for the background image and transparency */
+        #welcome-section {
+            /* 1. Set the background image */
+            background-image: url("../images/zoo_background.jpg'");
+            background-size: cover; /* Ensure image covers the area */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* 2. Add padding/min-height to make the background visible */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
+            /* This is a shorthand property combining image and overlay color */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('../images/zoo_background.jpg');
+            
+            /* Ensure the text is readable */
+            color: white; 
+            
+            /* 4. Add the transition for a smooth visual effect */
+            transition: all 0.5s ease-in-out; 
+            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
+        }
+        
+        /* Optional: Hover effect to demonstrate the transition */
+        #welcome-section:hover {
+            opacity: 1; 
+        }
+
+        /* Ensure the heading text is aligned */
+        #welcome-section h1, #welcome-section h3 {
+            color: white; /* Ensure text color is white */
+            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
+        }
