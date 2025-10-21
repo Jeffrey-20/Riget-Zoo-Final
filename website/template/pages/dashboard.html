@@ -1,0 +1,108 @@
+{% extends "pages/base.html" %} <!--connects this page to the base  -->
+{% load static %}
+{% block content %}
+<!-- This webpage will not show if the user is not logged in -->
+
+ <style>
+        /* CSS for the background image and transparency */
+        #welcome-section {
+            /* 1. Set the background image */
+            background-image: url("{% static 'images/zoo_background.jpg' %}");
+            background-size: cover; /* Ensure image covers the area */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* 2. Add padding/min-height to make the background visible */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
+            /* This is a shorthand property combining image and overlay color */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("{% static 'images/zoo_background.jpg' %}");
+            
+            /* Ensure the text is readable */
+            color: white; 
+            
+            /* 4. Add the transition for a smooth visual effect */
+            transition: all 0.5s ease-in-out; 
+            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
+        }
+        
+        /* Optional: Hover effect to demonstrate the transition */
+        #welcome-section:hover {
+            opacity: 1; 
+        }
+
+        /* Ensure the heading text is aligned */
+        #welcome-section h1, #welcome-section h3 {
+            color: white; /* Ensure text color is white */
+            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
+        }
+    </style>
+
+    <br>
+    
+    <div class="text-center" id="welcome-section">
+        
+        <br>
+        
+        <hr>
+        <br>
+        
+    </div>
+    
+    <br>
+
+<div class="container mt-4">
+    <h2 class="mb-3">Welcome to Dashboard, {{ request.user.username }} 🎉</h2>
+
+    <hr>
+
+    <a class="btn btn-outline-primary btn-sm mb-3" href="{% url 'create-record' %}">➕ Create a record</a>
+
+    <hr>
+
+    <table class="table table-dark table-hover table-bordered"> <!-- Table headers   -->
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+
+        <tbody> <!-- When a new record is created, the loop will create a record. The user can make as much as they want  -->
+            {% if records %}
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.first_name|default:"-" }}&nbsp;{{ record.last_name|default:"-" }}</td>
+                    <td>{{ record.email|default:"-" }}</td>
+                    <td>{{ record.phone|default:"-" }}</td>
+                    <td>{{ record.address|default:"-" }}</td>
+                    <td>{{ record.city|default:"-" }}</td>
+                    <td>{{ record.creation_date|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <a href="{% url 'view_record' record.id %}" class="btn btn-sm btn-info">View</a>  <!--This was replaced with a link  -->
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">No records found.</td> <!-- It will activate when there are no records  -->
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'user-logout' %}" class="btn btn-danger">🚪 Logout</a> <!-- to logout  -->
+</div>
+
+{% endblock %}

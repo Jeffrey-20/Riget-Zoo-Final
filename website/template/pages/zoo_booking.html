@@ -1,0 +1,67 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Book Your Zoo Tickets! 🐒🦒</h1>
+
+{% if ticket_prices %}
+    <h3>Current Ticket Prices</h3>
+    <ul>
+        {% for name, price in ticket_prices.items %}
+            <li>{{ name }}: ${{ price }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="{{ form.booking_date.id_for_label }}">Select Visit Date:</label>
+        {{ form.booking_date }}
+        {% if form.booking_date.errors %}
+            <p style="color: red;">{{ form.booking_date.errors }}</p>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label>{{ form.adult_tickets.label }}</label>
+        {{ form.adult_tickets }}
+    </div>
+
+    <div class="form-group">
+        <label>{{ form.child_tickets.label }}</label>
+        {{ form.child_tickets }}
+    </div>
+
+    <div class="form-group">
+        <label>{{ form.senior_tickets.label }}</label>
+        {{ form.senior_tickets }}
+    </div>
+
+    <div class="form-group">
+        <label>{{ form.customer_name.label }}</label>
+        {{ form.customer_name }}
+    </div>
+
+    <div class="form-group">
+        <label>{{ form.email.label }}</label>
+        {{ form.email }}
+    </div>
+
+    {% if form.non_field_errors %}
+        <div style="color: darkred; border: 1px solid darkred; padding: 10px;">
+            {% for error in form.non_field_errors %}
+                <p>🚨 Error: {{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <button type="submit" style="margin-top: 20px;">Book Tickets</button>
+</form>
+
+<hr>
+
+
+{% endblock %}

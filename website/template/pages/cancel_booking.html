@@ -1,0 +1,104 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block content %}
+
+ <style>
+        /* CSS for the background image and transparency */
+        #welcome-section {
+            /* 1. Set the background image */
+            background-image: url("{% static 'images/zoo_background.jpg' %}");
+            background-size: cover; /* Ensure image covers the area */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* 2. Add padding/min-height to make the background visible */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
+            /* This is a shorthand property combining image and overlay color */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("{% static 'images/zoo_background.jpg' %}");
+            
+            /* Ensure the text is readable */
+            color: white; 
+            
+            /* 4. Add the transition for a smooth visual effect */
+            transition: all 0.5s ease-in-out; 
+            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
+        }
+        
+        /* Optional: Hover effect to demonstrate the transition */
+        #welcome-section:hover {
+            opacity: 1; 
+        }
+
+        /* Ensure the heading text is aligned */
+        #welcome-section h1, #welcome-section h3 {
+            color: white; /* Ensure text color is white */
+            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
+        }
+    </style>
+
+    <br>
+    
+    <div class="text-center" id="welcome-section">
+        
+        <br>
+        
+        <hr>
+        <br>
+        
+    </div>
+    
+    <br>
+
+<h1>Cancel Your Booking </h1>
+
+<p>Enter your booking details below to cancel your zoo visit.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.booking_id.id_for_label }}">Booking ID:</label>   <!--This is the table to input the ID of the user e.g #1  -->
+
+        {{ form.booking_id }}
+    </div> 
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">Email:</label>   <!--This is the table to input the emial of the user -->
+
+        {{ form.email }}
+    </div>
+
+    {% if form.non_field_errors %}
+        <div style="color: darkred; border: 1px solid darkred; padding: 10px;">  <!--This imakes sure the required fields are inputted e.g password -->
+            {% for error in form.non_field_errors %}
+                <p> {{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <button type="submit" style="background-color: crimson; color: white; margin-top: 15px;">   <!--This is the button for cancelling bookings -->
+
+        Confirm Cancellation
+    </button>
+</form>
+
+{% if messages %}
+    <ul style="margin-top: 20px; list-style: none;">
+        {% for message in messages %}
+            <li style="color: green;">✅ {{ message }}</li> <!--This sends  a message such as 'account created successfully'-->
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<hr>
+<a href="{% url 'book-tickets' %}" style="text-decoration: none;">      <!--This is the link to the webpage for booking tickets -->
+
+    <button type="button" style="background-color: #007bff; color: white;">
+        Back to Booking Page
+    </button>
+</a>
+{% endblock %}

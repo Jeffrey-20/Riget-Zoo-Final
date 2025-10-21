@@ -1,0 +1,93 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% block content %}
+
+ <style>
+        /* CSS for the background image and transparency */
+        #welcome-section {
+            /* 1. Set the background image */
+            background-image: url("{% static 'images/zoo_background.jpg' %}");
+            background-size: cover; /* Ensure image covers the area */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* 2. Add padding/min-height to make the background visible */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
+            /* This is a shorthand property combining image and overlay color */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("{% static 'images/zoo_background.jpg' %}");
+            
+            /* Ensure the text is readable */
+            color: white; 
+            
+            /* 4. Add the transition for a smooth visual effect */
+            transition: all 0.5s ease-in-out; 
+            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
+        }
+        
+        /* Optional: Hover effect to demonstrate the transition */
+        #welcome-section:hover {
+            opacity: 1; 
+        }
+
+        /* Ensure the heading text is aligned */
+        #welcome-section h1, #welcome-section h3 {
+            color: white; /* Ensure text color is white */
+            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
+        }
+    </style>
+
+    <br>
+    
+    <div class="text-center" id="welcome-section">
+        
+        <br>
+        
+        <hr>
+        <br>
+        
+    </div>
+    
+    <br>
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Zoo Gift Shop</h1>
+
+  <div class="row row-cols-1 row-cols-md-4 g-4">   <!-- aligns the cards in a row-->
+
+    <!-- A loop for creating numerous cards-->
+    {% for product in products %}                  
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <!--  inages in the cards and their descriptiona-->
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">  
+        {% else %}
+        <img src="{% static 'images/default-product.png' %}" class="card-img-top" alt="No image">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text text-muted">{{ product.description|truncatechars:100 }}</p>
+          <p class="fw-bold mb-3">£{{ product.price }}</p>
+
+          <!-- This link below adds the item we chose to our cart-->
+          <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success mt-auto w-100">
+            Add to Cart 🛒
+          </a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">No products available yet.</p>  <!-- This displays when there are no iutems in the shop-->
+    {% endfor %}
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="{% url 'view_cart' %}" class="btn btn-primary">View Cart</a>  <!-- We can check the cart, we canpu add to cart using the view-->
+  </div>
+</div>
+{% endblock %}

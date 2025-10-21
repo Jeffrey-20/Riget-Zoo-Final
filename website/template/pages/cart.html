@@ -1,0 +1,120 @@
+{% extends "pages/base.html" %}
+{% block content %}
+ <style>
+        /* CSS for the background image and transparency */
+        #welcome-section {
+            /* 1. Set the background image */
+            background-image: url("{% static 'images/zoo_background.jpg' %}");
+            background-size: cover; /* Ensure image covers the area */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* 2. Add padding/min-height to make the background visible */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
+            /* This is a shorthand property combining image and overlay color */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("{% static 'images/zoo_background.jpg' %}");
+            
+            /* Ensure the text is readable */
+            color: white; 
+            
+            /* 4. Add the transition for a smooth visual effect */
+            transition: all 0.5s ease-in-out; 
+            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
+        }
+        
+        /* Optional: Hover effect to demonstrate the transition */
+        #welcome-section:hover {
+            opacity: 1; 
+        }
+
+        /* Ensure the heading text is aligned */
+        #welcome-section h1, #welcome-section h3 {
+            color: white; /* Ensure text color is white */
+            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
+        }
+    </style>
+
+    <br>
+    
+    <div class="text-center" id="welcome-section">
+        
+        <br>
+        
+        <hr>
+        <br>
+        
+    </div>
+    
+    <br>
+
+
+
+<div class="container my-5">
+  <h1 class="text-center mb-4">Your Booking Summary</h1>
+
+  {% if cart %}
+  <div class="card shadow-lg rounded-4 p-4">
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Activity / Experience</th>
+            <th>Guests</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                <div>
+                  <h5 class="mb-1">{{ item.product.name }}</h5>
+                  <p class="text-muted small mb-0">Date: {{ item.product.date|default:"Select at checkout" }}</p>
+                  <p class="text-muted small mb-0">Duration: {{ item.product.duration|default:"TBA" }}</p>
+                </div>
+              </div>
+            </td>
+            <td>{{ item.quantity }}</td>
+            <td>£{{ item.total_price }}</td>
+            <td>
+              <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-trash"></i> Remove
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Total Amount:</h4>
+      <h3 class="text-success mb-0">£{{ cart.get_total_price }}</h3>
+    </div>
+  </div>
+
+  <div class="text-end mt-4">
+    <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow">
+      Continue to Booking Details
+    </a>
+  </div>
+
+  {% else %}
+  <div class="text-center py-5">
+    <h4 class="text-muted">You haven’t booked anything yet.</h4>
+    <p class="mb-4">Browse our experiences and add them to your booking list!</p>
+    <a href="{% url 'product_list' %}" class="btn btn-outline-primary btn-lg rounded-pill">Explore Activities</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

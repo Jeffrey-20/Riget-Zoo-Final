@@ -1,0 +1,136 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% block content %}
+  <style>
+        /* CSS for the background image and transparency */
+        #welcome-section {
+            /* 1. Set the background image */
+            background-image: url("{% static 'images/zoo_background.jpg' %}");
+            background-size: cover; /* Ensure image covers the area */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* 2. Add padding/min-height to make the background visible */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
+            /* This is a shorthand property combining image and overlay color */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("{% static 'images/zoo_background.jpg' %}");
+            
+            /* Ensure the text is readable */
+            color: white; 
+            
+            /* 4. Add the transition for a smooth visual effect */
+            transition: all 0.5s ease-in-out; 
+            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
+        }
+        
+        /* Optional: Hover effect to demonstrate the transition */
+        #welcome-section:hover {
+            opacity: 1; 
+        }
+
+        /* Ensure the heading text is aligned */
+        #welcome-section h1, #welcome-section h3 {
+            color: white; /* Ensure text color is white */
+            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
+        }
+    </style>
+
+    <br>
+    
+    <div class="text-center" id="welcome-section">
+        
+        <br>
+        
+        <hr>
+        <br>
+        
+    </div>
+    
+    <br>
+    
+
+<div class="container my-5">
+  <h1 class="text-center mb-5 fw-bold text-success">Explore the Zoo Trivia</h1>
+
+  <!-- 🐾 Responsive grid: 1 column on small screens, 3 on medium+, 4 on large+ -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+    <!-- 🦎 Reptile Trivia -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-4">
+        <div class="card-body text-center">
+          <h4 class="card-title fw-bold">🦎 Reptile Trivia</h4>
+          <p class="card-text text-muted">Test your knowledge of snakes, lizards, and turtles!</p>
+          <a href="{% url 'reptile_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 🐘 Mammal Trivia -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-4">
+        <div class="card-body text-center">
+          <h4 class="card-title fw-bold">🐘 Mammal Trivia</h4>
+          <p class="card-text text-muted">From lions to lemurs — see how much you know about mammals!</p>
+          <a href="{% url 'mammal_trivia' %}" class="btn btn-outline-success ">Play Trivia</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🦜 Birds Trivia -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-4">
+        <div class="card-body text-center">
+          <h4 class="card-title fw-bold">🦜 Birds Trivia</h4>
+          <p class="card-text text-muted">Discover the secrets of our feathered friends!</p>
+          <a href="{% url 'bird_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <!-- 🐠 Fish Trivia -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-4">
+        <div class="card-body text-center">
+          <h4 class="card-title fw-bold">🐠 Fish Trivia</h4>
+          <p class="card-text text-muted">Dive into the depths of aquatic knowledge!</p>
+          <a href="{% url 'fish_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🦖 Dino Trivia -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-4">
+        <div class="card-body text-center">
+          <h4 class="card-title fw-bold">🦖 Dino Trivia</h4>
+          <p class="card-text text-muted">Travel back in time and test your dinosaur IQ!</p>
+          <a href="{% url 'dino_trivia' %}" class="btn btn-outline-success">Play Trivia</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🌿 Plant Trivia -->
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-4">
+        <div class="card-body text-center">
+          <h4 class="card-title fw-bold">🌿 Plant Trivia</h4>
+          <p class="card-text text-muted">Learn fun facts about nature’s green wonders!</p>
+          <a href="{% url 'plant_trivia' %}" class="btn btn-outline-success">Play Now</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

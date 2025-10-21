@@ -1,0 +1,25 @@
+
+{% extends "pages/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!--This is for updating the records in the dashboard-->
+    <br>
+    <div class="container bg-dark p-5 form-layout">
+        <h3>Update Record</h3>
+
+        <h6> Update the Record below</h6>
+
+        <hr>
+        <br>
+        <form method="POST" autocomplete="off">   <!--This sends data to the server when the button is pushed-->
+            {% csrf_token %}
+            {{form|crispy}}
+            <br>
+            <button type="submit" class="btm btn-primary w-100 btn-block p-2">Update Record</button>
+        </form>
+
+    </div>
+
+{% endblock %}

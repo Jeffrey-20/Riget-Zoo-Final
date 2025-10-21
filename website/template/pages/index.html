@@ -1,0 +1,627 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+ <style>
+        /* CSS for the background image and transparency */
+        #welcome-section {
+            /* 1. Set the background image */
+            background-image: url("{% static 'images/zoo_background.jpg' %}");
+            background-size: cover; /* Ensure image covers the area */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* 2. Add padding/min-height to make the background visible */
+            padding-top: 50px;
+            padding-bottom: 50px;
+            
+            /* 3. Create the transparent overlay using RGBA (Black, 50% opaque) */
+            /* This is a shorthand property combining image and overlay color */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("{% static 'images/zoo_background.jpg' %}");
+            
+            /* Ensure the text is readable */
+            color: white; 
+            
+            /* 4. Add the transition for a smooth visual effect */
+            transition: all 0.5s ease-in-out; 
+            opacity: 0.9; /* Slightly reduce opacity for a subtle transparent effect */
+        }
+        
+        /* Optional: Hover effect to demonstrate the transition */
+        #welcome-section:hover {
+            opacity: 1; 
+        }
+
+        /* Ensure the heading text is aligned */
+        #welcome-section h1, #welcome-section h3 {
+            color: white; /* Ensure text color is white */
+            text-shadow: 2px 2px 4px #000000; /* Text shadow for better visibility */
+        }
+    </style>
+
+    <br>
+    
+    <div class="text-center" id="welcome-section">
+        
+        <br>
+        <h1>Welcome to the our Zoo  {{ request.user.username }}</h1>
+        <hr>
+        <br>
+        
+    </div>
+    
+    <br>
+    
+
+
+<div id="homeCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+
+    <div class="carousel-inner">
+
+        <div class="carousel-item active">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/animals.jpg' %}" class="card-img-top" alt="General Animals Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Animals</h5>
+                    <p class="card-text">A collection of animals in their natural habitat.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/tiger.jpg' %}" class="card-img-top" alt="Tiger Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Tiger</h5>
+                    <p class="card-text">The mighty tiger roaming in the wild.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#tigerModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/lion.jpg' %}" class="card-img-top" alt="Lion Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Lion</h5>
+                    <p class="card-text">The king of the jungle standing tall.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#lionModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/elephant.jpg' %}" class="card-img-top" alt="Elephant Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Elephant</h5>
+                    <p class="card-text">The gentle giant of the savannah.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#elephantModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/cheetah.jpg' %}" class="card-img-top" alt="Cheetah Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Cheetah</h5>
+                    <p class="card-text">The fastest animal on land in action.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#cheetahModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/zebra.jpg' %}" class="card-img-top" alt="Zebra Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Zebra</h5>
+                    <p class="card-text">The beautiful striped grazer.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#zebraModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/giraffe.jpg' %}" class="card-img-top" alt="Giraffe Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Giraffe</h5>
+                    <p class="card-text">The tallest land animal reaching for the trees.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#giraffeModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/gorilla.jpg' %}" class="card-img-top" alt="Gorilla Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Gorilla</h5>
+                    <p class="card-text">The king of the primates</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#gorillaModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/wolf.jpg' %}" class="card-img-top" alt="Wolf Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Wolf</h5>
+                    <p class="card-text">The fierce pack hunter of the forest.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#wolfModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="card mx-auto shadow-lg" style="max-width: 600px;">
+                <img src="{% static 'images/bear.jpg' %}" class="card-img-top" alt="Bear Slide">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Bear</h5>
+                    <p class="card-text">The powerful bear wandering the wilderness.</p>
+                    <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="#bearModal">
+                        See Details
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+
+</div>
+
+<hr>
+
+<!--Animal Details Pop-ups (Modals)-->
+
+<div class="modal fade" id="lionModal" tabindex="-1" aria-labelledby="lionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lionModalLabel">Details: The Mighty Lion 🦁</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{% static 'images/lion.jpg' %}" class="img-fluid mb-3" alt="Lion">
+        <h6>Key Facts:</h6>
+        <ul>
+            <li>**Scientific Name:** *Panthera leo*</li>
+            <li>**Habitat:** Savannahs and grasslands</li>
+            <li>**Social Structure:** Live in groups called prides</li>
+            <li>**Conservation Status:** Vulnerable (VU)</li>
+            <li>**Fun Fact:** Male lions have magnificent manes that protect their necks during fights.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="tigerModal" tabindex="-1" aria-labelledby="tigerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tigerModalLabel">Details: The Majestic Tiger 🐅</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/tiger.jpg' %}" class="img-fluid mb-3" alt="Tiger">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Panthera tigris*</li>
+              <li>**Habitat:** Forests and grasslands</li>
+              <li>**Social Structure:** Solitary hunters</li>
+              <li>**Conservation Status:** Endangered (EN)</li>
+              <li>**Fun Fact:** A tiger's roar can be heard as far as two miles away.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="elephantModal" tabindex="-1" aria-labelledby="elephantModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="elephantModalLabel">Details: The Gentle Giant Elephant 🐘</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/elephant.jpg' %}" class="img-fluid mb-3" alt="Elephant">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Loxodonta africana* (African)</li>
+              <li>**Habitat:** Savannah, forests, and deserts</li>
+              <li>**Social Structure:** Matriarchal herds</li>
+              <li>**Conservation Status:** Endangered (African forest)</li>
+              <li>**Fun Fact:** An elephant's trunk contains about 40,000 muscles, but no bones.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="cheetahModal" tabindex="-1" aria-labelledby="cheetahModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cheetahModalLabel">Details: The Swift Cheetah 🐆</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/cheetah.jpg' %}" class="img-fluid mb-3" alt="Cheetah">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Acinonyx jubatus*</li>
+              <li>**Habitat:** Open grasslands and savannahs</li>
+              <li>**Social Structure:** Often solitary; brothers may form small groups</li>
+              <li>**Conservation Status:** Vulnerable (VU)</li>
+              <li>**Fun Fact:** Cheetahs can go from 0 to 60 mph in just three seconds.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="zebraModal" tabindex="-1" aria-labelledby="zebraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="zebraModalLabel">Details: The Striped Zebra 🦓</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/zebra.jpg' %}" class="img-fluid mb-3" alt="Zebra">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Equus quagga* (Plains Zebra)</li>
+              <li>**Habitat:** Grasslands and open woodlands</li>
+              <li>**Social Structure:** Family groups called harems</li>
+              <li>**Conservation Status:** Least Concern (LC)</li>
+              <li>**Fun Fact:** No two zebras have the exact same stripe pattern; they are unique like fingerprints.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="giraffeModal" tabindex="-1" aria-labelledby="giraffeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="giraffeModalLabel">Details: The Towering Giraffe 🦒</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/giraffe.jpg' %}" class="img-fluid mb-3" alt="Giraffe">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Giraffa camelopardalis*</li>
+              <li>**Habitat:** Savannah and open woodlands</li>
+              <li>**Social Structure:** Loose groups, not highly territorial</li>
+              <li>**Conservation Status:** Vulnerable (VU)</li>
+              <li>**Fun Fact:** Despite their long necks, giraffes have the same number of neck vertebrae as humans (seven).</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="gorillaModal" tabindex="-1" aria-labelledby="gorillaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="gorillaModalLabel">Details: The Powerful Gorilla 🦍</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/gorilla.jpg' %}" class="img-fluid mb-3" alt="Gorilla">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Gorilla beringei* (Eastern Gorilla)</li>
+              <li>**Habitat:** Mountain and lowland forests</li>
+              <li>**Social Structure:** Tight-knit groups led by a dominant Silverback male</li>
+              <li>**Conservation Status:** Critically Endangered (CR)</li>
+              <li>**Fun Fact:** Gorillas are mostly herbivorous, spending much of their day foraging for plants.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="wolfModal" tabindex="-1" aria-labelledby="wolfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="wolfModalLabel">Details: The Fierce Wolf 🐺</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/wolf.jpg' %}" class="img-fluid mb-3" alt="Wolf">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Canis lupus*</li>
+              <li>**Habitat:** Forests, mountains, and deserts</li>
+              <li>**Social Structure:** Highly organized packs</li>
+              <li>**Conservation Status:** Least Concern (LC), but locally threatened</li>
+              <li>**Fun Fact:** Wolves use a wide variety of sounds, including barks, whimpers, and howls, to communicate.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="bearModal" tabindex="-1" aria-labelledby="bearModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bearModalLabel">Details: The Powerful Bear 🐻</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="{% static 'images/bear.jpg' %}" class="img-fluid mb-3" alt="Bear">
+          <h6>Key Facts:</h6>
+          <ul>
+              <li>**Scientific Name:** *Ursus arctos* (Brown Bear)</li>
+              <li>**Habitat:** Forests, mountains, and tundra</li>
+              <li>**Social Structure:** Largely solitary, except for mothers with cubs</li>
+              <li>**Conservation Status:** Least Concern (LC)</li>
+              <li>**Fun Fact:** Black bears are excellent tree climbers, often climbing to escape danger or to find food.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-success">View Live Feed (Demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- The end of the description card-->
+
+<!--################# CARD 1 ####################-->
+<div class="row">
+  <div class="col">
+    <div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{% static 'images/time.jpg' %}" class="img-fluid w-125 " alt="time">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">Opening Times</h5>
+        <p class="card-text">
+          Monday: 9am to 5pm <br>
+          Tuesday: 9am to 5pm <br>
+          Wednesday: 9am to 5pm <br>
+          Thursday: 9am to 5pm <br>
+          Friday: 9am to 5pm <br>
+          Saturday: 9am to 3pm <br>
+          
+
+        </p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!--################# CARD 2 ####################-->
+  </div>
+  <div class="col">
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{% static 'images/zoo_rules.jpg' %}" class="img-fluid w-100"  alt="rules">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">Zoo Rules </h5>
+       
+</p>
+<!---->
+<p>
+    <button class="btn btn-success " type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        View Zoo Rules
+    </button>
+</p>
+
+<div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        <p>No flash photography: The bright light can startle or scare animals.</p>
+        <p>Keep a safe distance: Stay behind barriers and on designated paths. Animals are not tame and can be unpredictable.</p>
+        <p>o not feed the animals: They have specific diets, and human food can be harmful or even fatal. </p>
+        <p>Do not disturb the animals: Avoid shouting, banging on glass, or making sudden movements that could stress them. </p>
+        <p>Stay on paths and obey barriers: Never climb on, over, or under barriers, as they are there to keep you safe. </p>
+        <p>Follow staff instructions: Zoo staff are trained to ensure the safety of both visitors and animals. Listen to their directions. </p>
+        <p>Proper disposal: Use the bins provided to dispose of trash properly. </p>
+
+    </div>
+</div>
+ 
+      </div>
+    </div>
+  </div>
+</div>
+    
+  </div>
+ 
+  <!--################# CARD 3 ####################-->
+  <div class="w-100"></div>
+
+  <div class="col">
+    <div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+        <img src="{% static 'images/locate.png' %}" class="img-fluid w-100"  alt="location">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">Find us </h5>
+        <p class="card-text">
+          53 Aventure Street, WER 4O9
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+ <!--################# CARD 4 ####################-->
+ <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="row text-center mb-4">
+                        <div class="col-12">
+                            <h1 class="display-4 text-success card-title mb-1">Our Mission at the Zoo</h1>
+                            <p class="lead text-muted card-subtitle">A look into our history, values, and dedication to wildlife conservation.</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-12 text-center">
+                            <img src="{% static 'images/leaves.jpg' %}" 
+                                 class="img-fluid rounded shadow-sm" 
+                                 alt="Zoo Entrance and Visitors"
+                                 style="max-height: 400px; object-fit: cover;">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <h2 class="text-success border-bottom pb-2">Our Story</h2>
+                            <p>Founded in **1985** by renowned conservationist Dr. Jane Miller, our Zoo was built on the principle that seeing is saving. We started with just a handful of rescued native species and have grown into a leading facility, dedicated to creating immersive, natural habitats for over 200 species from around the globe.</p>
+                            <p>Every ticket purchased goes directly back into animal care, habitat maintenance, and global conservation programs. We're more than just a place to visit—we're a dedicated center for preservation.</p>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <h2 class="text-success border-bottom pb-2">Conservation & Education</h2>
+                            <p>Our commitment extends far beyond our gates. We actively participate in **Species Survival Plans (SSP)** for critically endangered animals, including our Amur Tigers and Eastern Gorillas. Through research partnerships and field programs, we work tirelessly to protect wildlife in its natural habitat.</p>
+                            <p>We believe **education is key to conservation**. Our interactive exhibits, daily keeper talks, and youth camps aim to inspire the next generation of wildlife advocates. Come learn, explore, and become a part of the solution!</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <h2 class="text-success mb-3">By the Numbers</h2>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <h3 class="display-6 text-">200+</h3>
+                                    <p class="text-muted">Animal Species</p>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <h3 class="display-6 text">15</h3>
+                                    <p class="text-muted">Active Global Programs</p>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <h3 class="display-6 text">2+ months</h3>
+                                    <p class="text-muted">In Operation</p>
+                                </div>
+                            </div>
+                            <a href="{% url 'register' %}" class="btn btn-lg btn-success mt-4 shadow">Join Our Community Today</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+
+<!-- guryegufwrheuuuuuuuuh-->
+
+
+<footer class="bg-light text-center text-lg-start mt-5">
+  <div class="text-center p-3" style="background-color: rgb(0, 51, 255);">
+    © 2025 Zoo:
+     <a class="text-dark" href="#">Contact Us</a>
+      <br>
+     <a href="{% url 'register' %}" class="btn btn-success  btn-block">Create your account</a>  
+     <br>
+     <br>
+      <a href="{% url 'my-login' %}" class="btn btn-success  btn-block">Login</a>  
+     <br>
+     <br>
+     <a href="{% url 'user-logout' %}" class="btn btn-danger">🚪 Logout</a> <!-- to logout  -->
+</div>
+<br>
+  </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+{% endblock %}

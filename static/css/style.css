@@ -1,0 +1,19 @@
+h1 {
+    color: green;
+}
+
+.form-layout{
+    border-radius: 5px;
+    width: 500px;
+}
+
+.carousel-item img {
+  height: 500px;
+  object-fit: cover; /* crops image nicely instead of stretching */
+}
+
+.model {
+  background-color: rgb(247, 247, 247);
+}
+
+
