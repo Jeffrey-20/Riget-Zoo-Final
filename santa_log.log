@@ -5344,3 +5344,26 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'plant_trivia' not found. 'pl
 2025-10-21 14:08:07,420-WARNING -Not Found: /media/products/lion.jpg
 2025-10-21 14:08:13,878-INFO -Home page loaded
 2025-10-21 14:10:35,303-INFO -Home page loaded
+2025-10-21 15:31:19,888-INFO -Home page loaded
+2025-10-21 15:34:35,651-WARNING -Not Found: /media/products/lion.jpg
+2025-10-21 15:34:38,773-INFO -Home page loaded
+2025-10-21 15:37:26,420-INFO -Home page loaded
+2025-10-21 16:06:33,029-INFO -Home page loaded
+2025-10-21 16:07:05,453-INFO -User Logged in
+2025-10-21 16:07:09,691-INFO -Home page loaded
+2025-10-21 16:07:11,243-WARNING -Not Found: /media/products/lion.jpg
+2025-10-21 16:07:15,699-INFO -Home page loaded
+2025-10-21 16:08:51,507-INFO -User Logged Out
+2025-10-21 16:09:04,371-INFO -User Logged in
+2025-10-21 16:09:49,329-WARNING -Forbidden (CSRF token from POST incorrect.): /my-login
+2025-10-21 16:09:58,946-INFO -User Logged Out
+2025-10-21 16:10:09,103-INFO -User Logged in
+2025-10-21 16:10:16,515-INFO -Home page loaded
+2025-10-21 16:10:45,914-WARNING -Not Found: /.well-known/appspecific/com.chrome.devtools.json
+2025-10-21 16:10:49,418-INFO -Home page loaded
+2025-10-21 16:10:49,484-WARNING -Not Found: /.well-known/appspecific/com.chrome.devtools.json
+2025-10-21 16:10:55,432-WARNING -Not Found: /media/products/lion.jpg
+2025-10-21 16:10:55,452-WARNING -Not Found: /.well-known/appspecific/com.chrome.devtools.json
+2025-10-21 16:10:56,833-WARNING -Not Found: /.well-known/appspecific/com.chrome.devtools.json
+2025-10-21 16:11:02,657-WARNING -Not Found: /.well-known/appspecific/com.chrome.devtools.json
+2025-10-21 16:20:42,312-INFO -Home page loaded
