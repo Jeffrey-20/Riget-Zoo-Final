@@ -12,6 +12,10 @@ from django.contrib import messages
 from .forms import CancelBookingForm
 from .models import Product
 import logging
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import ContactForm
 
 logging.basicConfig(filename='santa_log.log', level=logging.DEBUG,
                     format='%(asctime)s-%(levelname)s -%(message)s')
@@ -456,4 +460,33 @@ def random_trivia(request):
     # For demonstration, we assume a template 'pages/random_trivia.html' exists.
     return render(request, 'pages/random_trivia.html', {'questions': selected})
 
+
+
+
+def contact_view(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
+            # Optional: send email
+            send_mail(
+                subject=f"New message from {name}",
+                message=message,
+                from_email=email,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL],
+            )
+
+            return render(request, 'pages/success.html', {'name': name})
+    else:
+        form = ContactForm()
+
+    return render(request, 'pages/contact.html', {'form': form})
+
+
+def success_view(request):
+    logger.info("message sent")
+    return render(request, 'pages/success.html')
 

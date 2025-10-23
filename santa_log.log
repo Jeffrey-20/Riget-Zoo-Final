@@ -5371,3 +5371,178 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'plant_trivia' not found. 'pl
 2025-10-21 16:21:05,285-WARNING -Not Found: /media/products/lion.jpg
 2025-10-21 16:24:04,999-INFO -Home page loaded
 2025-10-21 16:30:26,541-INFO -Home page loaded
+2025-10-23 10:39:20,714-INFO -Home page loaded
+2025-10-23 10:39:24,768-INFO -Home page loaded
+2025-10-23 10:41:43,259-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\forms.py changed, reloading.
+2025-10-23 10:42:30,575-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\views.py changed, reloading.
+2025-10-23 10:42:45,520-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\urls.py changed, reloading.
+2025-10-23 10:45:38,661-INFO -Home page loaded
+2025-10-23 10:45:46,244-INFO -Home page loaded
+2025-10-23 10:46:24,160-INFO -Home page loaded
+2025-10-23 10:46:25,936-INFO -Home page loaded
+2025-10-23 10:46:47,808-WARNING -Not Found: /contacxt
+2025-10-23 10:46:53,803-WARNING -Not Found: /contact
+2025-10-23 10:46:56,035-WARNING -Not Found: /contact
+2025-10-23 10:47:56,247-WARNING -Not Found: /contact/
+2025-10-23 10:48:11,367-WARNING -Not Found: /contact/
+2025-10-23 10:48:57,333-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\views.py changed, reloading.
+2025-10-23 10:49:05,122-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\views.py changed, reloading.
+2025-10-23 10:49:10,383-WARNING -Not Found: /contact/
+2025-10-23 10:49:10,978-WARNING -Not Found: /contact/
+2025-10-23 10:49:11,418-WARNING -Not Found: /contact/
+2025-10-23 10:49:11,683-WARNING -Not Found: /contact/
+2025-10-23 10:49:11,883-WARNING -Not Found: /contact/
+2025-10-23 10:49:16,544-INFO -Home page loaded
+2025-10-23 10:49:36,413-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\urls.py changed, reloading.
+2025-10-23 10:49:43,525-INFO -Home page loaded
+2025-10-23 10:50:01,633-ERROR -Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Riget Zoo\Riget-Zoo-Final\website\views.py", line 475, in contact_view
+    send_mail(
+    ~~~~~~~~~^
+        subject=f"New message from {name}",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        recipient_list=[settings.DEFAULT_FROM_EMAIL],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\__init__.py", line 92, in send_mail
+    return mail.send()
+           ~~~~~~~~~^^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\message.py", line 307, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 128, in send_messages
+    new_conn_created = self.open()
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 86, in open
+    self.connection = self.connection_class(
+                      ~~~~~~~~~~~~~~~~~~~~~^
+        self.host, self.port, **connection_params
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\python\Lib\smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+                  ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\python\Lib\smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\python\Lib\smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                                    self.source_address)
+                                    ^^^^^^^^^^^^^^^^^^^^
+  File "C:\python\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\python\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+2025-10-23 10:51:18,846-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\urls.py changed, reloading.
+2025-10-23 10:52:03,975-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\views.py changed, reloading.
+2025-10-23 10:52:38,972-INFO -C:\Riget Zoo\Riget-Zoo-Final\website\views.py changed, reloading.
+2025-10-23 10:52:47,074-ERROR -Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Riget Zoo\Riget-Zoo-Final\website\views.py", line 475, in contact_view
+    send_mail(
+    ~~~~~~~~~^
+        subject=f"New message from {name}",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        recipient_list=[settings.DEFAULT_FROM_EMAIL],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\__init__.py", line 92, in send_mail
+    return mail.send()
+           ~~~~~~~~~^^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\message.py", line 307, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 128, in send_messages
+    new_conn_created = self.open()
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 86, in open
+    self.connection = self.connection_class(
+                      ~~~~~~~~~~~~~~~~~~~~~^
+        self.host, self.port, **connection_params
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\python\Lib\smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+                  ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\python\Lib\smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\python\Lib\smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                                    self.source_address)
+                                    ^^^^^^^^^^^^^^^^^^^^
+  File "C:\python\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\python\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+2025-10-23 10:52:55,138-ERROR -Internal Server Error: /contact/
+Traceback (most recent call last):
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Riget Zoo\Riget-Zoo-Final\website\views.py", line 475, in contact_view
+    send_mail(
+    ~~~~~~~~~^
+        subject=f"New message from {name}",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        recipient_list=[settings.DEFAULT_FROM_EMAIL],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\__init__.py", line 92, in send_mail
+    return mail.send()
+           ~~~~~~~~~^^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\message.py", line 307, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 128, in send_messages
+    new_conn_created = self.open()
+  File "C:\Riget Zoo\Riget-Zoo-Final\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 86, in open
+    self.connection = self.connection_class(
+                      ~~~~~~~~~~~~~~~~~~~~~^
+        self.host, self.port, **connection_params
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\python\Lib\smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+                  ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\python\Lib\smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\python\Lib\smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                                    self.source_address)
+                                    ^^^^^^^^^^^^^^^^^^^^
+  File "C:\python\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\python\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+2025-10-23 10:54:51,576-INFO -C:\Riget Zoo\Riget-Zoo-Final\RZA\settings.py changed, reloading.
+2025-10-23 10:55:03,770-INFO -Home page loaded
+2025-10-23 10:55:05,277-WARNING -Not Found: /media/products/lion.jpg
+2025-10-23 10:55:10,649-INFO -Home page loaded

@@ -37,7 +37,11 @@ urlpatterns = [
     path('plants-trivia/', views.plant_trivia, name='plant_trivia'),
     path('trivia/', views.trivia, name='trivia'),
     path('trivia/random/', views.random_trivia, name='random_trivia'),
+
+     path('contact/', views.contact_view, name='contact'),
+     path('success/', views.success_view, name='success'),
 ]
 
 #'add/<int:product_id>/' This is a dynamic URL pattern that contains a path converter
+
 
