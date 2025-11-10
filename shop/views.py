@@ -3,6 +3,8 @@ from .models import Product
 from .cart import Cart
 from django.contrib.auth.decorators import login_required
 
+
+@login_required(login_url='my-login')
 def shop_home(request):
     products = Product.objects.all()
     return render(request, 'pages/shop_home.html', {'products': products})

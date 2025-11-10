@@ -193,11 +193,12 @@ def cancel_booking(request):
     return render(request, "pages/cancel_booking.html", {"form": form})
 
 ####### Shopping views ###########
-
+@login_required(login_url='my-login')
 def shop_home(request):  # shop home
     products = Product.objects.all()
     return render(request, 'pages/shop_home.html', {'products': products})
 
+@login_required(login_url='my-login')
 def add_to_cart(request, product_id): # adding to the cart
     product = get_object_or_404(Product, id=product_id)
     cart = request.session.get('cart', {})
@@ -205,6 +206,7 @@ def add_to_cart(request, product_id): # adding to the cart
     request.session['cart'] = cart      # Save the updated 'cart' dictionary back into the session.
     return redirect('view_cart')         # Redirect the user to the 'view_cart' page
 
+@login_required(login_url='my-login')
 def remove_from_cart(request, product_id):  # remnoving from  the cart
     cart = request.session.get('cart', {})
     if str(product_id) in cart:
@@ -212,6 +214,7 @@ def remove_from_cart(request, product_id):  # remnoving from  the cart
     request.session['cart'] = cart
     return redirect('view_cart')
 
+@login_required(login_url='my-login')
 def view_cart(request):  # Viewing the cart
     cart = request.session.get('cart', {})
     products = Product.objects.filter(id__in=cart.keys())
@@ -221,7 +224,7 @@ def view_cart(request):  # Viewing the cart
 #############################################
 
 
-
+@login_required(login_url='my-login')
 def book_tickets(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
@@ -243,6 +246,7 @@ def book_tickets(request):
         'ticket_prices': ticket_prices
     })
 
+@login_required(login_url='my-login')
 def book_tickets(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
@@ -259,6 +263,7 @@ def book_tickets(request):
 from django.shortcuts import render, get_object_or_404
 from .models import Booking
 
+@login_required(login_url='my-login')
 def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
@@ -270,30 +275,38 @@ def booking_confirmation(request, booking_id):
 
 
 ###############################################
-
+    
+@login_required(login_url='my-login')
 def trivia(request):
     return render(request, 'pages/trivia.html')
 
+@login_required(login_url='my-login')
 def mammal_trivia(request):
     return render(request, 'pages/mammal_trivia.html')
 
+@login_required(login_url='my-login')
 def fish_trivia(request):
     return render(request, 'pages/fish_trivia.html')
 
+@login_required(login_url='my-login')
 def reptile_trivia(request):
     return render(request, 'pages/reptile_trivia.html')
 
+@login_required(login_url='my-login')
 def birds_trivia(request):
     return render(request, 'pages/bird_trivia.html')
 
 
+@login_required(login_url='my-login')
 def dino_trivia(request):
     return render(request, 'pages/dino_trivia.html')
+    
 
-
+@login_required(login_url='my-login')
 def plant_trivia(request):
     return render(request, 'pages/plant_trivia.html')
 
+@login_required(login_url='my-login')
 def bird_trivia(request):
     return render(request, 'pages/bird_trivia.html')
 
@@ -306,6 +319,7 @@ from .models import TriviaQuestion
 import random
 # Note: This function assumes the 'render' function is available from your web framework (e.g., Django or Flask).
 
+@login_required(login_url='my-login')
 def random_trivia(request):
     """
     Selects 5 random multiple-choice trivia questions from a large pool 
@@ -462,7 +476,7 @@ def random_trivia(request):
 
 
 
-
+@login_required(login_url='my-login')
 def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
