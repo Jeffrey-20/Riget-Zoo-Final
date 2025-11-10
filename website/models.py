@@ -2,6 +2,7 @@ from django.db import models
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils import timezone
+from django.core.validators import RegexValidator, EmailValidator
 
 # Create your models here.
 
@@ -17,6 +18,9 @@ class Record(models.Model):  # Model for the record in dashboard
     def __str__(self):
         return self.first_name + " " + self.last_name
     
+
+
+
 
 class TicketType(models.Model):
     """Defines the different types of tickets and their base prices."""

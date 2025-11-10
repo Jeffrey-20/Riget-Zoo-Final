@@ -1,30 +1,38 @@
-{% extends 'pages/base.html' %} <!--connects this page to the base  -->
-
-{% load crispy_forms_tags %} <!-- It arranges the cells correctly, so we do not need divs   -->
+{% extends 'pages/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <body>
     <br>
-    <div class="container bg-dark p-5 form-layout">
+    <div class="container bg-dark p-5 form-layout text-white">
         <h3>Login to your account</h3>  
-
         <hr>
+
+        <!-- Login Form -->
         <form method="POST" autocomplete="off">
             {% csrf_token %}
             {{ login_form|crispy }}
             <br>
-            <button type="submit" class="btn btn-success w-100 btn-block p-2">
-             Login
-            </button>
+            <button type="submit" class="btn btn-success w-100 btn-block p-2">Login</button>
         </form>
 
+         <!-- Forgot Password -->
         <br>
         <div class="text-center">
+         <p>Forgot your password?</p>
+            <a href="{% url 'password_reset' %}" class="text-success">Reset it here</a>
+        </div>
+
+        <br>
+         <!-- Register Option -->
+        <div class="text-center">
             <p>Don't have an account?</p>
-            <a href="{% url 'register' %}">Register</a> 
+            <a href="{% url 'register' %}" class="btn btn-primary w-100">Register</a> 
+           
+
+
         </div>
         <br>
     </div>
 </body>
 {% endblock %}
-
