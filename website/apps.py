@@ -1,8 +1,7 @@
 from django.apps import AppConfig
 
-# This class is for configuring the class
-class WebsiteConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
+class ZooAppConfig(AppConfig):
     name = 'website'
 
-
+    def ready(self):
+        import website.signals  # make sure signals are loaded

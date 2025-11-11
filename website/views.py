@@ -17,6 +17,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
 from .forms import DiscountForm
+from .models import RewardProfile, Booking
 
 logging.basicConfig(filename='santa_log.log', level=logging.DEBUG,
                     format='%(asctime)s-%(levelname)s -%(message)s')
@@ -310,19 +311,27 @@ def book_tickets(request):
     return render(request, 'pages/book_tickets.html', {'form': form})
 
 
-from django.shortcuts import render, get_object_or_404
-from .models import Booking
+#######################  HERE ###############################
 
 @login_required(login_url='my-login')
 def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
-    # ✅ Simply render the template — do NOT redirect here
-    return render(request, 'pages/confirmation.html', {
-        'booking': booking,
-        'title': 'Booking Confirmation'
-    })
+    # Ensure user has a reward profile
+    reward_profile, created = RewardProfile.objects.get_or_create(user=request.user)
 
+    # Add this purchase
+    reward_profile.add_purchase()
+
+    # Convert points to money
+    money_equivalent = reward_profile.convert_points_to_money()
+
+    return render(request, "pages/confirmation.html", {
+        "title": "Booking Confirmation",
+        "booking": booking,
+        "reward_profile": reward_profile,
+        "money_equivalent": money_equivalent,
+    })
 
 ###############################################
     
