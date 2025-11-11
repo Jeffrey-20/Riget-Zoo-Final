@@ -1,0 +1,144 @@
+{% extends "pages/base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+{% load static %}
+
+<style>
+  #discount-section {
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("{% static 'images/discount_background.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-shadow: 2px 2px 4px #000;
+    padding: 50px 0;
+  }
+
+  .discount-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .discount-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .discount-badge {
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+</style>
+
+<div id="discount-section" class="text-center">
+  <h1 class="fw-bold">🎉 Zoo Discount & Pass Options</h1>
+  <p class="fs-5">Save more and enjoy nature all year round!</p>
+</div>
+
+<div class="container my-5">
+
+  <div class="mt-5">
+    <h3 class="text-primary mb-3"><i class="bi bi-gift"></i> Available Discounts</h3>
+
+    <div class="row g-4">
+
+      <!-- 🌿 10% Seasonal Discount -->
+      <div class="col-md-4">
+        <div class="card border-success shadow-sm h-100 discount-card">
+          <div class="card-body text-center">
+            <h5 class="card-title text-success fw-bold">🌸 Seasonal Discount (10%)</h5>
+            <p class="card-text">Enjoy 10% off on tickets during our early spring events.</p>
+            <span class="badge bg-success discount-badge">10% OFF</span><br><br>
+            <button type="button" class="btn btn-success btn-sm"
+                    onclick="generateCode('SEASONAL10')">
+              Generate Code
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🌼 15% Seasonal Discount -->
+      <div class="col-md-4">
+        <div class="card border-primary shadow-sm h-100 discount-card">
+          <div class="card-body text-center">
+            <h5 class="card-title text-primary fw-bold">🌼 Seasonal Discount (15%)</h5>
+            <p class="card-text">Get 15% off during our summer and festival promotions.</p>
+            <span class="badge bg-primary discount-badge">15% OFF</span><br><br>
+            <button type="button" class="btn btn-primary btn-sm"
+                    onclick="generateCode('SEASONAL15')">
+              Generate Code
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🌺 20% Seasonal Discount -->
+      <div class="col-md-4">
+        <div class="card border-info shadow-sm h-100 discount-card">
+          <div class="card-body text-center">
+            <h5 class="card-title text-info fw-bold">🌺 Seasonal Discount (20%)</h5>
+            <p class="card-text">Enjoy 20% off during our special summer wildlife events.</p>
+            <span class="badge bg-info text-dark discount-badge">20% OFF</span><br><br>
+            <button type="button" class="btn btn-info btn-sm text-dark"
+                    onclick="generateCode('SEASONAL20')">
+              Generate Code
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end row -->
+
+    <hr class="my-5">
+
+    <h3 class="text-warning mb-3"><i class="bi bi-stars"></i> Exclusive Passes</h3>
+
+    <div class="row g-4">
+
+      <!-- 🎟️ Annual Pass -->
+      <div class="col-md-6">
+        <div class="card border-warning shadow-sm h-100 discount-card">
+          <div class="card-body text-center">
+            <h5 class="card-title text-warning fw-bold">🎟️ Annual Pass</h5>
+            <p class="card-text">Unlimited visits for 12 months — enjoy 40% off regular prices.</p>
+            <span class="badge bg-warning text-dark discount-badge">40% OFF</span><br><br>
+            <button type="button" class="btn btn-outline-warning btn-sm"
+                    onclick="generateCode('ANNUAL40')">
+              Generate Code
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 👨‍👩‍👧‍👦 Family Package -->
+      <div class="col-md-6">
+        <div class="card border-danger shadow-sm h-100 discount-card">
+          <div class="card-body text-center">
+            <h5 class="card-title text-danger fw-bold">👨‍👩‍👧‍👦 Family Package</h5>
+            <p class="card-text">Families of 4+ get 30% off all tickets and free parking.</p>
+            <span class="badge bg-danger discount-badge">30% OFF</span><br><br>
+            <button type="button" class="btn btn-outline-danger btn-sm"
+                    onclick="generateCode('FAMILY30')">
+              Generate Code
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end row -->
+  </div>
+</div>
+
+<!-- ✅ JavaScript to generate special codes -->
+<script>
+  function generateCode(baseCode) {
+    const random = Math.floor(1000 + Math.random() * 9000);
+    const finalCode = baseCode + "-" + random;
+
+    // Redirect to booking page with the code
+    const bookingUrl = "{% url 'book-tickets' %}?discount=" + encodeURIComponent(finalCode);
+    window.location.href = bookingUrl;
+  }
+</script>
+
+{% endblock %}

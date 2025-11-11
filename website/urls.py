@@ -76,6 +76,9 @@ urlpatterns = [
         name='password_reset_complete'
     ),
 
+      # 🆕 New discount form URL
+    path('discount/', views.apply_discount, name='apply_discount'),
+
 ]
 
 #'add/<int:product_id>/' This is a dynamic URL pattern that contains a path converter
