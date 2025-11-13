@@ -102,4 +102,16 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea, label='Message')
 
 
-    
+
+class DiscountForm(forms.Form):
+    DISCOUNT_CHOICES = [
+        ('none', 'No Discount'),
+        ('seasonal', 'Seasonal Discount (20% Off)'),
+        ('annual', 'Annual Pass (40% Off)'),
+        ('family', 'Family Package (30% Off)'),
+    ]
+
+    discount_type = forms.ChoiceField(choices=DISCOUNT_CHOICES, label="Select Discount Type")
+    discount_code = forms.CharField(label="Discount Code", required=False)
+
+

@@ -42,6 +42,14 @@
         }
     </style>
 
+
+{% if discount_code %}
+  <div class="alert alert-success text-center mt-3">
+    🎟️ Discount Applied: <strong>{{ discount_name }}</strong><br>
+    Code: <code>{{ discount_code }}</code>
+  </div>
+{% endif %}
+
     <br>
     
     <div class="text-center" id="welcome-section">
@@ -144,6 +152,27 @@
           <button type="submit" class="btn btn-success px-4">
           <i class="bi bi-calculator"></i> Calculate Price & Book
           </button>
+
+            {% if total_price %}
+            <div class="alert alert-info mt-4 text-center">
+            <strong>Total:</strong> ${{ total_price }} <br>
+            
+           {% if discount_code %}
+                <div class="alert alert-success text-center mt-3">
+                🎟️ <strong>Discount Applied!</strong><br>
+                <strong>Type:</strong> {{ discount_type }} <br>
+               <strong>Offer:</strong> {{ discount_name }} <br>
+               <strong>Code:</strong> <code>{{ discount_code }}</code>
+              </div>
+          {% endif %}
+          {% endif %}
+
+
+
+          <a href="{% url 'apply_discount' %}" class="btn btn-outline-primary px-4">
+          <i class="bi bi-percent"></i> View Discounts
+          </a>
+
 
         </div>
       </form>

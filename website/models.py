@@ -3,6 +3,9 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.core.validators import RegexValidator, EmailValidator
+from django.contrib.auth.models import User
+from django.conf import settings
+from decimal import Decimal
 
 # Create your models here.
 
@@ -148,6 +151,30 @@ class TriviaQuestion(models.Model):
 
 
 
+class Purchase(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
 
 
+######################################
+User = settings.AUTH_USER_MODEL
 
+class RewardProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='reward_profile')
+    total_purchases = models.PositiveIntegerField(default=0)
+    points = models.PositiveIntegerField(default=0)
+
+    def add_purchase(self):
+        """Add a purchase and give 10 points after the 3rd purchase."""
+        self.total_purchases += 1
+        if self.total_purchases > 3:
+            self.points += 10
+        self.save()
+
+    def convert_points_to_money(self):
+        """Convert points to £ (10 points = £1)."""
+        return (Decimal(self.points) / Decimal(10)).quantize(Decimal('0.01'))
+
+    def __str__(self):
+        return f"{self.user.username} - {self.points} points"

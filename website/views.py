@@ -16,12 +16,13 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
+from .forms import DiscountForm
+from .models import RewardProfile, Booking
 
 logging.basicConfig(filename='santa_log.log', level=logging.DEBUG,
                     format='%(asctime)s-%(levelname)s -%(message)s')
 
 logger = logging.getLogger(__name__)
-
 
 
 
@@ -224,28 +225,78 @@ def view_cart(request):  # Viewing the cart
 #############################################
 
 
+
 @login_required(login_url='my-login')
 def book_tickets(request):
-    if request.method == 'POST':
-        form = BookingForm(request.POST)
-        if form.is_valid():
-            # You can add booking logic here (save, calculate total, etc.)
-            pass
-    else:
-        form = BookingForm()
-
-    # Optional: add ticket prices
     ticket_prices = {
         'Adult': 20,
         'Child': 10,
-        
     }
 
+    # 🎯 Step 1: Get discount code from URL
+    discount_code = request.GET.get('discount', '').upper().strip()
+    discount_percentage = 0
+    discount_name = None
+    discount_type = None  # <-- NEW
+
+    # 🎯 Step 2: Detect discount type
+    if discount_code.startswith("SEASONAL10"):
+        discount_percentage = 10
+        discount_name = "10% Off Seasonal Discount"
+        discount_type = "Seasonal Discount"
+    elif discount_code.startswith("SEASONAL15"):
+        discount_percentage = 15
+        discount_name = "15% Off Seasonal Discount"
+        discount_type = "Seasonal Discount"
+    elif discount_code.startswith("SEASONAL20"):
+        discount_percentage = 20
+        discount_name = "20% Off Seasonal Discount"
+        discount_type = "Seasonal Discount"
+    elif discount_code.startswith("FAMILY30"):
+        discount_percentage = 30
+        discount_name = "30% Off Family Package"
+        discount_type = "Family Package"
+    elif discount_code.startswith("ANNUAL40"):
+        discount_percentage = 40
+        discount_name = "40% Off Annual Pass"
+        discount_type = "Annual Pass"
+
+    total_price = None
+    discounted_price = None
+
+    # 🎟️ Step 3: Process form submission
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            adult_tickets = form.cleaned_data.get('adult_tickets', 0)
+            child_tickets = form.cleaned_data.get('child_tickets', 0)
+
+            total_price = (
+                adult_tickets * ticket_prices['Adult'] +
+                child_tickets * ticket_prices['Child']
+            )
+
+            # 🧮 Step 4: Apply discount
+            if discount_percentage > 0:
+                discounted_price = round(total_price * (1 - discount_percentage / 100), 2)
+            else:
+                discounted_price = total_price
+    else:
+        form = BookingForm()
+
+    # 🎯 Step 5: Render template
     return render(request, 'pages/book_tickets.html', {
         'form': form,
-        'ticket_prices': ticket_prices
+        'ticket_prices': ticket_prices,
+        'discount_code': discount_code,
+        'discount_name': discount_name,
+        'discount_type': discount_type,  # <-- NEW
+        'discount_percentage': discount_percentage,
+        'total_price': total_price,
+        'discounted_price': discounted_price,
     })
 
+##############################################
 @login_required(login_url='my-login')
 def book_tickets(request):
     if request.method == 'POST':
@@ -260,19 +311,27 @@ def book_tickets(request):
     return render(request, 'pages/book_tickets.html', {'form': form})
 
 
-from django.shortcuts import render, get_object_or_404
-from .models import Booking
+#######################  HERE ###############################
 
 @login_required(login_url='my-login')
 def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
-    # ✅ Simply render the template — do NOT redirect here
-    return render(request, 'pages/confirmation.html', {
-        'booking': booking,
-        'title': 'Booking Confirmation'
-    })
+    # Ensure user has a reward profile
+    reward_profile, created = RewardProfile.objects.get_or_create(user=request.user)
 
+    # Add this purchase
+    reward_profile.add_purchase()
+
+    # Convert points to money
+    money_equivalent = reward_profile.convert_points_to_money()
+
+    return render(request, "pages/confirmation.html", {
+        "title": "Booking Confirmation",
+        "booking": booking,
+        "reward_profile": reward_profile,
+        "money_equivalent": money_equivalent,
+    })
 
 ###############################################
     
@@ -503,4 +562,31 @@ def contact_view(request):
 def success_view(request):
     logger.info("message sent")
     return render(request, 'pages/success.html')
+
+
+def apply_discount(request):
+    discounted_price = None
+    base_price = 100  # Example price
+
+    if request.method == "POST":
+        form = DiscountForm(request.POST)
+        if form.is_valid():
+            discount_type = form.cleaned_data["discount_type"]
+
+            if discount_type == "seasonal":
+                discounted_price = base_price * 0.8
+            elif discount_type == "annual":
+                discounted_price = base_price * 0.6
+            elif discount_type == "family":
+                discounted_price = base_price * 0.7
+            else:
+                discounted_price = base_price
+    else:
+        form = DiscountForm()
+
+    return render(request, "pages/discount_form.html", {"form": form, "discounted_price": discounted_price})
+
+
+
+
 

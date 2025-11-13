@@ -1,33 +1,59 @@
-{% extends "pages/base.html" %} <!--connects this page to the base  -->
+{% extends "pages/base.html" %}
 {% load static %}
 {% block content %}
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    <style>
+        .points-box {
+            background-color: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .points-box h2 { color: #2e7d32; }
+    </style>
 </head>
 <body>
-    <h1>Booking Confirmed! </h1>
-    <p>Thank you, {{ booking.customer_name }}, your tickets are reserved!</p> <!-- Simple title with the   name of user  -->
+    <div class="container mt-5 text-center">
+        <h1>Booking Confirmed!</h1>
+        <p>Thank you, <strong>{{ booking.customer_name }}</strong>, your tickets are reserved!</p>
 
-    <h2>Booking Details</h2>
-    <p><strong>Confirmation ID:</strong> #{{ booking.id }}</p>   <!--Shows id of the user, date and email -->
-    <p><strong>Visit Date:</strong> {{ booking.booking_date|date:"l, F jS, Y" }}</p>
-    <p><strong>Email:</strong> {{ booking.email }}</p>
+        <h2>Booking Details</h2>
+        <p><strong>Confirmation ID:</strong> #{{ booking.id }}</p>
+        <p><strong>Visit Date:</strong> {{ booking.booking_date|date:"l, F jS, Y" }}</p>
+        <p><strong>Email:</strong> {{ booking.email }}</p>
 
-    <h3>Tickets Booked:</h3>
-    <ul>
-        <li>Adults: {{ booking.adult_tickets }}</li>
-        <li>Children: {{ booking.child_tickets }}</li><!-- number of tickets for adult and children  -->
-        
-    </ul>
+        <h3>Tickets Booked:</h3>
+        <ul style="list-style: none;">
+            <li>Adults: {{ booking.adult_tickets }}</li>
+            <li>Children: {{ booking.child_tickets }}</li>
+        </ul>
 
-    <hr>
-    <h2>TOTAL PRICE: ${{ booking.total_price }} CONFIRMED </h2>  
-    <p style="font-style: italic;">We look forward to seeing you at the Zoo!</p>
+        <hr>
+        <h2>TOTAL PRICE: ${{ booking.total_price }} — CONFIRMED</h2>
+        <p style="font-style: italic;">We look forward to seeing you at the Zoo!</p>
+
+        <!-- 🪙 Rewards Section -->
+        <div class="points-box">
+            {% if reward_profile.total_purchases <= 3 %}
+                <h2>🌱 Keep Going!</h2>
+                <p>You’ve made <strong>{{ reward_profile.total_purchases }}</strong> purchase(s).</p>
+                <p>No points earned yet — earn 10 points per purchase after your 3rd booking!</p>
+            {% else %}
+                <h2>🎉 You've Earned Points!</h2>
+                <p>You earned <strong>10 points</strong> for this purchase!</p>
+                <p>Total Points: <strong>{{ reward_profile.points }}</strong></p>
+                <p>Money Equivalent: <strong>${{ money_equivalent|floatformat:2 }}</strong></p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
 
